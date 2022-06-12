@@ -2,7 +2,11 @@
 
 {% block content %}
     <div>
-        <button>Static websites</button>
+        <button>
+            <a href="{{ url_for('sites.create_site') }}">
+                Static websites
+            </a>
+        </button>
         <button>Virtual machines</button>
     </div> 
 {% endblock %}
