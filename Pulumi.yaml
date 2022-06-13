@@ -1,0 +1,6 @@
+name: pulumi-wrapper
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A UI for simple Pulumi deployments
