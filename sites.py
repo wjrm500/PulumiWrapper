@@ -10,7 +10,7 @@ def create_program(content):
     bucket = aws.s3.Bucket(
         'bucket',
         acl = 'public-read', # Access control list
-        policy = (lambda path: open(path))('policy.json'),
+        policy = (lambda path: open(path).read())('policy.json'),
         website = aws.s3.BucketWebsiteArgs(index_document = index_document)
     )
     aws.s3.BucketObject( # Creates the HTML document
