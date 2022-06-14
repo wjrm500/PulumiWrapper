@@ -17,7 +17,8 @@ def create_program(content):
         'index',
         bucket = bucket.id,
         content = content,
-        key = index_document
+        key = index_document,
+        content_type = 'text/html'
     )
     pulumi.export('url', bucket.website_endpoint)
 
@@ -41,9 +42,10 @@ def create():
     def encapsulated_program():
         return create_program('Abcd')
     stack = auto.create_stack(
-        stack_name = 'test',
+        stack_name = 'dev',
         project_name = current_app.config['PULUMI_PROJECT_NAME'],
         program = encapsulated_program
     )
+    stack.set_config('aws:region', auto.ConfigValue('us-east-1'))
     stack.up(on_output = print)
     return render_template('create.html')

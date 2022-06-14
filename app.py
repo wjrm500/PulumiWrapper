@@ -1,6 +1,8 @@
+from dotenv import load_dotenv
 from flask import Flask, render_template
 import sites
 
+load_dotenv()
 app = Flask(__name__)
 app.register_blueprint(sites.bp)
 app.config['PULUMI_ORGANISATION'] = 'wjrm500'
