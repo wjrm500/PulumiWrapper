@@ -1,4 +1,5 @@
 from flask import Blueprint, current_app, render_template
+import json
 import pulumi
 import pulumi_aws as aws
 import pulumi.automation as auto
@@ -10,8 +11,24 @@ def create_program(content):
     bucket = aws.s3.Bucket(
         'bucket',
         acl = 'public-read', # Access control list
-        policy = (lambda path: open(path).read())('policy.json'),
         website = aws.s3.BucketWebsiteArgs(index_document = index_document)
+    )
+    aws.s3.BucketPolicy(
+        'bucket-policy',
+        bucket = bucket.id,
+        policy = bucket.id.apply(
+            lambda id: json.dumps(
+                {
+                    "Version": "2012-10-17",
+                    "Statement": {
+                        "Effect": "Allow",
+                        "Principal": "*",
+                        "Action": ["s3:GetObject"],
+                        "Resource": [f"arn:aws:s3:::{id}/*"],
+                    },
+                }
+            )
+        ),
     )
     aws.s3.BucketObject( # Creates the HTML document
         'index',
