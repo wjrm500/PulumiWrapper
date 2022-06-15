@@ -28,7 +28,7 @@ def create_program(content):
                     },
                 }
             )
-        ),
+        )
     )
     aws.s3.BucketObject( # Creates the HTML document
         'index',
@@ -44,14 +44,18 @@ def index():
     sites = []
     ws = auto.LocalWorkspace(
         project_settings = auto.ProjectSettings(
-            name = current_app.config['PULUMI_ORGANISATION'],
+            name = current_app.config['PULUMI_PROJECT_NAME'],
             runtime = 'python'
         )
     )
-    for stack_name in ws.list_stacks():
-        stack = auto.select_stack(stack_name = stack_name)
+    for stack_summary in ws.list_stacks():
+        stack = auto.select_stack(
+            stack_name = stack_summary.name,
+            project_name = current_app.config['PULUMI_PROJECT_NAME'],
+            program = lambda: None
+        )
         url = stack.outputs().get('url')
-        sites.append({'name': stack_name, 'url': url})
+        sites.append({'name': stack_summary.name, 'url': url})
     return render_template('sites_index.html', sites = sites)
 
 @bp.route('/create', methods = ['GET'])
