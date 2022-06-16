@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+    {% if not sites %}
+        <p>You haven't created any websites yet - get started by creating one <a href="{{ url_for('sites.create') }}">here</a>!</p>
+    {% endif %}
     <table>
         {% for site in sites %}
             <tr>
