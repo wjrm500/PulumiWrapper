@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block nav %}
-    <a href="{{ url_for('sites.create') }}">Create site</a>
+    <a href="{{ url_for('sites.create') }}" class="btn btn-success">Create site</a>
 {% endblock %}
 
 {% block content %}
     {% if not sites %}
-        <p>You haven't created any websites yet - get started by creating one <a href="{{ url_for('sites.create') }}">here</a>!</p>
+        <p class="p-2 rounded" style="background-color: #CCCCCC">You haven't created any websites yet - get started by creating one <a href="{{ url_for('sites.create') }}">here</a>!</p>
     {% endif %}
     <table>
         {% for site in sites %}
