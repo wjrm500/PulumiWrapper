@@ -54,7 +54,7 @@ def index():
             project_name = current_app.config['PULUMI_PROJECT_NAME'],
             program = lambda: None
         )
-        url = stack.outputs().get('url')
+        url = 'http://' + str(stack.outputs().get('url')).strip('\'')
         sites.append({'name': stack_summary.name, 'url': url})
     return render_template('sites_index.html', sites = sites)
 
