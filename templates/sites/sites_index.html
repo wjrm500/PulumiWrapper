@@ -7,13 +7,21 @@
 {% block content %}
     {% if not sites %}
         <p class="p-2 rounded" style="background-color: #CCCCCC">You haven't created any websites yet - get started by creating one <a href="{{ url_for('sites.create') }}">here</a>!</p>
-    {% endif %}
-    <table>
-        {% for site in sites %}
+    {% else %}
+        <p>Here is a list of the websites that you have created...</p>
+        <table class="table table-striped">
             <tr>
-                <td>{{ site.name }}</td>
-                <td>{{ site.url }}</td>
+                <th>Name</th>
+                <th>URL</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for site in sites %}
+                <tr>
+                    <td>{{ site.name }}</td>
+                    <td>
+                        <a href="{{ site.url }}">{{ site.url }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}
