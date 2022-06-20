@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, render_template
+from flask import Blueprint, current_app, render_template, request
 import json
 import pulumi
 import pulumi_aws as aws
@@ -60,13 +60,14 @@ def index():
 
 @bp.route('/create', methods = ['GET'])
 def create():
-    def encapsulated_program():
-        return create_program('Abcd')
-    stack = auto.create_stack(
-        stack_name = 'dev',
-        project_name = current_app.config['PULUMI_PROJECT_NAME'],
-        program = encapsulated_program
-    )
-    stack.set_config('aws:region', auto.ConfigValue('us-east-1'))
-    stack.up(on_output = print)
+    if request.method == 'POST':
+        def encapsulated_program():
+            return create_program('Abcd')
+        stack = auto.create_stack(
+            stack_name = 'dev',
+            project_name = current_app.config['PULUMI_PROJECT_NAME'],
+            program = encapsulated_program
+        )
+        stack.set_config('aws:region', auto.ConfigValue('us-east-1'))
+        stack.up(on_output = print)
     return render_template('create.html')

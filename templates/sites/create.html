@@ -1,1 +1,37 @@
-Create a site
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        <div class="form-group row mb-1">
+            <label for="name" class="col-2 col-form-label">Name</label>
+            <div class="col-10">
+                <input type="text" name="name" id="name" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row mb-1">
+            <label for="content-type" class="col-2 col-form-label">Content type</label>
+            <div class="col-10">
+                <select name="content-type" id="content-type" class="form-control">
+                    <option value="" disabled selected>Select one</option>
+                    <option value="url">URL</option>
+                    <option value="text">Text</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row mb-1" id="content-url" style="display:none;">
+            <label for="url" class="col-2 col-form-label">URL</label>
+            <div class="col-10">
+                <input type="text" name="url" id="url" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row mb-1" id="content-text" style="display:none;">
+            <label for="text" class="col-2 col-form-label">Text</label>
+            <div class="col-10">
+                <textarea name="text" id="text" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+{% endblock %}
